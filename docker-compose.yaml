@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:13
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+        - 5436:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_DB=point_of_sale
+    networks: 
+      - go_microservice
+  pointofsale:
+    container_name: pyuser_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 5002:5002
+    environment:
+      - GIN_MODE=release
+      - DB_HOST=localhost
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=point_of_sale
+      - DB_PORT=5432
+      - TOKEN_TTL=36000
+      - JWT_PRIVATE_KEY=pointofsale
+    depends_on:
+      - postgres
+    networks:
+      - go_microservice
+networks:
+  microservice1:
+    name: go_microservice
+volumes:
+  pgdata:
+    name: pgdata
