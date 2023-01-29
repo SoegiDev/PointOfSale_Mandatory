@@ -1,4 +1,4 @@
-.env
-menu.http
-menugroup.http
-table.http
+*.http
+.gitignore
+tests
+test_
