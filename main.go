@@ -30,7 +30,7 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		hostname, _ := os.Hostname()
 		c.JSON(200, gin.H{
-			"message": "Server is Done With Load balancer nginx = Hostname Is " + hostname,
+			"message": "Server is Done With Docker , PGSQL & Load balancer nginx = Hostname Is " + hostname,
 		})
 	})
 	r.GET("/ping", func(c *gin.Context) {
