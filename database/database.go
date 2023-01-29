@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -13,9 +14,11 @@ import (
 var Database *gorm.DB
 
 func Connect() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if gin.Mode() == "debug" {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
 	}
 	host := os.Getenv("DB_HOST")
 	username := os.Getenv("DB_USER")
