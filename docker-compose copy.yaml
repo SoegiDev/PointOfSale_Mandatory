@@ -20,12 +20,12 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8080"
+      - "5000"
     restart: "always"
     #env_file:
      # - .env
     environment:
-      - PORT=8080
+      - PORT=5000
       - GIN_MODE=release
       - DB_HOST=db_postgres
       - DB_USER=postgres
@@ -38,9 +38,9 @@ services:
       - db_postgres
     networks:
       - go_microservice
-      - api.network
+      - "api.network"
     deploy:
-        replicas: 5
+      replicas: 5
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -51,7 +51,7 @@ services:
     ports: 
       - "80:80"
     networks: 
-      - api.network
+      - "api.network"
 networks:
   api.network:
     name: api.network

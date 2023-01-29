@@ -28,13 +28,15 @@ func main() {
 	seeds.InsertMenu()
 	seeds.InsertTable()
 	r.GET("/", func(c *gin.Context) {
+		hostname, _ := os.Hostname()
 		c.JSON(200, gin.H{
-			"message": "Welcome Home",
+			"message": "Server is Done With Load balancer nginx = Hostname Is " + hostname,
 		})
 	})
 	r.GET("/ping", func(c *gin.Context) {
+		hostname, _ := os.Hostname()
 		c.JSON(200, gin.H{
-			"message": "pong",
+			"message": "pong " + hostname,
 		})
 	})
 	r.GET("/groupmenu", func(c *gin.Context) {
@@ -77,8 +79,7 @@ func main() {
 	if os.Getenv("PORT") != "" { // get enviroment variable that set by ACNM
 		port = os.Getenv("PORT")
 	} else {
-		port = "8080"
+		port = "5000"
 	}
-	fmt.Println("GIN_MODE:", os.Getenv("GIN_MODE"))
 	r.Run(fmt.Sprintf(":%v", port))
 }

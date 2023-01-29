@@ -1,7 +1,7 @@
-FROM golang:latest
-
-WORKDIR /usr/src/app
-
+FROM golang:alpine
+RUN apk update && apk add --no-cache git
+WORKDIR /app
 COPY . .
-
-CMD ["go","run","./main.go"]
+RUN go mod tidy
+RUN go build -o /docker main.go
+CMD ["/docker"]
